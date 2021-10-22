@@ -1,0 +1,9 @@
+databases==0.5.3
+SQLAlchemy_Utils==0.37.8
+SQLAlchemy==1.4.25
+alembic==1.7.4
+pytest==6.2.5
+fastapi==0.70.0
+
+asyncpg
+uvicorn
