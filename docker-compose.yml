@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.9'
 
 services:
   db:
@@ -6,14 +6,15 @@ services:
     image: postgres
     restart: always
     environment:
-#      POSTGRES_USER: ${DB_USER}
-#      POSTGRES_PASSWORD: ${DB_PASSWORD}
-#      POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: swaplify
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
     volumes:
       - /var/db_data/:/var/lib/postgresql/data/
+      - ./init_db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
     networks:
       - swaplify_network
 
@@ -21,9 +22,9 @@ services:
     container_name: swaplify-backend
     build: .
     environment:
-      DB_USER: user_test
-      DB_PASSWORD: user_test
-      DB_NAME: swaplify
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
       DB_HOST: db
     ports:
       - 8000:8000
@@ -31,7 +32,6 @@ services:
       - db
     networks:
       - swaplify_network
-
 
 networks:
   swaplify_network:

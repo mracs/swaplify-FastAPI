@@ -6,7 +6,10 @@ FROM python:3.9-slim
 #    openssl libssl-dev \
 #    && apt-get clean \
 #    && rm -rf /var/lib/apt/lists/*
-#
+
+RUN apt-get -y update && \
+    apt-get install -y libpq-dev
+
 #ARG USER_NAME=app
 #ARG USER_UID=1000
 #ARG PASSWD=password
@@ -19,7 +22,8 @@ FROM python:3.9-slim
 WORKDIR /app
 COPY . .
 
-RUN pip3 install -r requirements.txt
+
+RUN pip3 install --upgrade pip && pip3 install -r requirements.txt
 
 #RUN chown -R ${USER_NAME}:${USER_NAME} /app
 #
@@ -32,6 +36,5 @@ RUN pip3 install -r requirements.txt
 
 EXPOSE 8000
 
-
-
+ENTRYPOINT ["bash", "entrypoint.sh"]
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0" , "--port" , "8000"]

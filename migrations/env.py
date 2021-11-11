@@ -19,7 +19,7 @@ config.set_main_option('sqlalchemy.url', str(SQLALCHEMY_DATABASE_URL))
 
 section = config.config_ini_section
 config.set_section_option(section, "DB_USER", environ.get("DB_USER"))
-config.set_section_option(section, "DB_PASS", environ.get("DB_PASS"))
+config.set_section_option(section, "DB_PASSWORD", environ.get("DB_PASSWORD"))
 config.set_section_option(section, "DB_NAME", environ.get("DB_NAME"))
 config.set_section_option(section, "DB_HOST", environ.get("DB_HOST"))
 
