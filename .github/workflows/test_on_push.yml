@@ -12,6 +12,8 @@ jobs:
       POSTGRES_DB: swaplify
     steps:
       - uses: actions/checkout@master
+      - name: Create docker netowork
+        run: docker network create --driver=bridge nginx.docker
       - name: Up containers
         run: docker compose up -d --build
       - name: Run tests
