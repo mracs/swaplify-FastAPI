@@ -6,33 +6,37 @@ services:
     image: postgres
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_NAME: ${DB_NAME}
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+      - DB_USER
+      - DB_PASSWORD
+    env_file:
+      - .env
     volumes:
       - /var/db_data/:/var/lib/postgresql/data/
       - ./init_db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
     networks:
-      - swaplify_network
+      - nginx.docker
 
   app:
     container_name: swaplify-backend
     build: .
     environment:
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_NAME: ${DB_NAME}
-      DB_HOST: db
+      - DB_USER
+      - DB_PASSWORD
+      - DB_NAME
+      - DB_HOST=db
+    env_file:
+      - .env
+    command: uvicorn app.main:app --host app --port 8000
     ports:
       - 8000:8000
     depends_on:
       - db
     networks:
-      - swaplify_network
+      - nginx.docker
 
 networks:
-  swaplify_network:
-    driver: bridge
+  nginx.docker:
+    name: nginx.docker
+    external: true

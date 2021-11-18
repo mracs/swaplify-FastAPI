@@ -1,0 +1,18 @@
+name: Run tests
+on: [push]
+
+jobs:
+  run_tests:
+    runs-on: ubuntu-latest
+    env:
+      DB_USER: user_test
+      DB_PASSWORD: user_test
+      DB_NAME: swaplify
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: swaplify
+    steps:
+      - uses: actions/checkout@master
+      - name: Up containers
+        run: docker compose up -d --build
+      - name: Run tests
+        run: pytest -v --cov=app

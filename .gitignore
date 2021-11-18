@@ -2,9 +2,12 @@ __pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache/
+.coverage
 
 .venv/
 venv/
+
+.env
 
 # Editor directories and files
 .idea
