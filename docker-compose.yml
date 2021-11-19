@@ -11,7 +11,7 @@ services:
       - DB_USER
       - DB_PASSWORD
     volumes:
-      - /var/db_data/:/var/lib/postgresql/data/
+      - $HOME/db_data/:/var/lib/postgresql/data/
       - ./init_db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
     networks:
       - nginx.docker

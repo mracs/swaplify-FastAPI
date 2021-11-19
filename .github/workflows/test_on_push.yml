@@ -15,7 +15,7 @@ jobs:
       - name: Create docker netowork
         run: docker network create --driver=bridge nginx.docker
       - name: Create postgres volume
-        run: mkdir /var/db_data/
+        run: mkdir $HOME/db_data/
       - name: Up containers
         run: docker compose up -d --build
       - name: Run tests
