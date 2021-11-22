@@ -43,4 +43,5 @@ jobs:
           DB_USER: postgres
           DB_PASSWORD: 123456
           DB_NAME: swaplify
+          DB_HOST: postgres
         run: python -m pytest -v --cov=app
