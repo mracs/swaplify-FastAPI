@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  db:
+    container_name: pg-docker
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+      - DB_USER
+      - DB_PASSWORD
+    volumes:
+      - $HOME/db_data/:/var/lib/postgresql/data/
+      - ./init_db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+    networks:
+      - nginx.docker
+
+  app:
+    container_name: swaplify-backend
+    build: .
+    environment:
+      - DB_USER
+      - DB_PASSWORD
+      - DB_NAME
+      - DB_HOST=db
+    command: uvicorn app.main:app --host app --port 8000
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    networks:
+      - nginx.docker
+
+networks:
+  nginx.docker:
+    name: nginx.docker
+    external: true

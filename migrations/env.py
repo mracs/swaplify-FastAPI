@@ -6,8 +6,6 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from alembic import context
 
-from app.models import users
-
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -19,7 +17,7 @@ config.set_main_option('sqlalchemy.url', str(SQLALCHEMY_DATABASE_URL))
 
 section = config.config_ini_section
 config.set_section_option(section, "DB_USER", environ.get("DB_USER"))
-config.set_section_option(section, "DB_PASS", environ.get("DB_PASS"))
+config.set_section_option(section, "DB_PASSWORD", environ.get("DB_PASSWORD"))
 config.set_section_option(section, "DB_NAME", environ.get("DB_NAME"))
 config.set_section_option(section, "DB_HOST", environ.get("DB_HOST"))
 
