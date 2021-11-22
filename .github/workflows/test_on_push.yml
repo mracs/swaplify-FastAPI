@@ -19,4 +19,4 @@ jobs:
       - name: Up containers
         run: docker compose up -d --build
       - name: Run tests
-        run: pytest -v --cov=app
+        run: python -m pytest -v --cov=app
